@@ -1,14 +1,19 @@
 import { useRef } from "react";
 
-export default function Answers({answers, selectedAnswer , answerState , onSelect}) {
-    const shuffledAnswers = useRef();
+export default function Answers({
+  answers,
+  selectedAnswer,
+  answerState,
+  onSelect,
+}) {
+  const shuffledAnswers = useRef();
 
-    if (!shuffledAnswers.current) {
-        shuffledAnswers.current = [...answers];
-        shuffledAnswers.current.sort(() => Math.random() - 0.5);
-      }
+  if (!shuffledAnswers.current) {
+    shuffledAnswers.current = [...answers];
+    shuffledAnswers.current.sort(() => Math.random() - 0.5);
+  }
 
-    return (
+  return (
     <ul id="answers">
       {shuffledAnswers.current.map((answer) => {
         const isSelected = selectedAnswer === answer;
@@ -19,8 +24,8 @@ export default function Answers({answers, selectedAnswer , answerState , onSelec
         }
 
         if (
-          answerState === "correct" ||
-          (answerState === "wrong" && isSelected)
+         ( answerState === "correct" ||
+          answerState === "wrong") && isSelected
         ) {
           cssClass = answerState;
         }
@@ -30,6 +35,7 @@ export default function Answers({answers, selectedAnswer , answerState , onSelec
             <button
               onClick={() => onSelect(answer)}
               className={cssClass}
+              disabled={answerState !== ""}
             >
               {answer}
             </button>
